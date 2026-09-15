@@ -1,0 +1,133 @@
+:root {
+  --bg-color: #fdf6ec;
+  --card-bg: #ffffff;
+  --text-dark: #2b2b2b;
+  --text-muted: #6b6b6b;
+  --accent: #e07a5f;
+  --accent-light: #f2cc8f;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-dark);
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: white;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.hero p {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--accent-light);
+  color: var(--text-dark);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dog-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px var(--shadow);
+}
+
+.dog-visual {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dog-flag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+}
+
+.dog-card h2 {
+  margin: 0.3rem 0;
+  font-size: 1.3rem;
+}
+
+.dog-country {
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0.2rem 0 0.7rem;
+  font-size: 0.9rem;
+}
+
+.dog-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.dog-card.hidden {
+  display: none;
+}
+
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid #eee;
+}
