@@ -1,0 +1,34 @@
+[github_action_config]
+
+# Générer automatiquement la description de la PR
+auto_describe = true
+
+# Pas de review automatique
+auto_review = false
+
+# Pas d'amélioration automatique
+auto_improve = false
+
+
+# ============================================================
+# DESCRIPTION DE LA PR
+# ============================================================
+
+[pr_description]
+
+extra_instructions = """
+En plus du résumé habituel, ajoute une section "## Diagramme" contenant
+un diagramme Mermaid (mermaid ...) représentant le flux dedonnées ou d'appels introduit ou modifié par cette pull request.
+ 
+Consignes :
+Utilise un flowchart TD (top-down).
+Un nœud par composant, fonction ou service significatif touché par
+  le diff — pas un nœud par fichier modifié.
+Des flèches nommées pour les interactions clés (ex: "appelle",
+  "authentifie", "publie sur").
+Si le changement ne justifie pas de diagramme (renommage, typo,
+  mise à jour de dépendance, changement de configuration sans impact
+  sur le flux), n'ajoute pas cette section plutôt que de forcer un
+  diagramme sans valeur.
+
+"""

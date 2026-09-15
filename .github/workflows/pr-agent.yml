@@ -1,11 +1,12 @@
 name: pr-agent
 
-# Déclenché à l'ouverture et à la réouverture d'une PR — volontairement pas
-# sur chaque push (synchronize), pour ne pas regénérer le résumé à chaque
-# commit pendant qu'une PR est encore en cours d'écriture.
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
 
 permissions:
   contents: read
@@ -15,9 +16,25 @@ permissions:
 jobs:
   pr_agent:
     runs-on: ubuntu-latest
+
     steps:
-      - name: PR-Agent — résumé, type, effort de revue, diagramme
+      - name: PR-Agent
         uses: qodo-ai/pr-agent@main
+
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # ==================================================
+          # GROQ
+          # ==================================================
+          GROQ.KEY: ${{ secrets.GROQ_API_KEY }}
+
+          # ==================================================
+          # PR-AGENT
+          # ==================================================
+          config.model: "groq/openai/gpt-oss-120b"
+          config.fallback_models: '["groq/openai/gpt-oss-120b"]'
+
+          github_action_config.auto_describe: "true"
+          github_action_config.auto_review: "false"
+          github_action_config.auto_improve: "false"
