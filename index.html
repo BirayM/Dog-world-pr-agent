@@ -1,7 +1,77 @@
-<article class="dog-card" data-region="amerique-sud">
-  <div class="dog-visual">🐕‍🦺</div>
-  <div class="dog-flag">🇧🇷</div>
-  <h2>Fila Brasileiro</h2>
-  <p class="dog-country">Brésil — Amérique du Sud</p>
-  <p class="dog-desc">Molosse imposant et protecteur, historiquement utilisé pour la garde des grandes propriétés brésiliennes.</p>
-</article>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chiens du Monde</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <h1>🐾 Chiens du Monde 🐾</h1>
+    <p>Une race de chien, une histoire, une région du monde</p>
+  </header>
+
+  <nav class="filters" id="filters">
+    <button class="filter-btn active" data-region="all">Toutes</button>
+    <button class="filter-btn" data-region="afrique">Afrique</button>
+    <button class="filter-btn" data-region="amerique-nord">Amérique du Nord</button>
+    <button class="filter-btn" data-region="asie">Asie</button>
+    <button class="filter-btn" data-region="europe">Europe</button>
+    <button class="filter-btn" data-region="oceanie">Océanie</button>
+  </nav>
+
+  <main class="grid" id="dog-grid">
+
+    <article class="dog-card" data-region="asie">
+      <div class="dog-visual">🐕</div>
+      <div class="dog-flag">🇯🇵</div>
+      <h2>Akita Inu</h2>
+      <p class="dog-country">Japon — Asie</p>
+      <p class="dog-desc">Chien noble et loyal, symbole de fidélité au Japon, rendu célèbre par l'histoire de Hachiko.</p>
+    </article>
+
+    <article class="dog-card" data-region="europe">
+      <div class="dog-visual">🐕‍🦺</div>
+      <div class="dog-flag">🇩🇪</div>
+      <h2>Berger Allemand</h2>
+      <p class="dog-country">Allemagne — Europe</p>
+      <p class="dog-desc">Race polyvalente, intelligente et travailleuse, très utilisée dans les forces de police et l'armée.</p>
+    </article>
+
+    <article class="dog-card" data-region="afrique">
+      <div class="dog-visual">🐕</div>
+      <div class="dog-flag">🇨🇩</div>
+      <h2>Basenji</h2>
+      <p class="dog-country">République Démocratique du Congo — Afrique</p>
+      <p class="dog-desc">Petit chien de chasse africain, réputé pour ne pas aboyer mais émettre un son unique appelé "yodel".</p>
+    </article>
+
+    <article class="dog-card" data-region="amerique-nord">
+      <div class="dog-visual">🐶</div>
+      <div class="dog-flag">🇲🇽</div>
+      <h2>Chihuahua</h2>
+      <p class="dog-country">Mexique — Amérique du Nord</p>
+      <p class="dog-desc">Le plus petit chien du monde, originaire de l'état de Chihuahua, plein de caractère.</p>
+    </article>
+
+    <article class="dog-card" data-region="oceanie">
+      <div class="dog-visual">🐕</div>
+      <div class="dog-flag">🇦🇺</div>
+      <h2>Dingo</h2>
+      <p class="dog-country">Australie — Océanie</p>
+      <p class="dog-desc">Chien sauvage emblématique de l'Australie, vivant en meute dans le bush.</p>
+    </article>
+
+    <!-- 🐕 Nouveaux chiens à ajouter ici via Pull Request -->
+
+  </main>
+
+  <footer class="footer">
+    <p>Projet de démo — chaque nouvelle race ajoutée = une Pull Request 🐾</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
