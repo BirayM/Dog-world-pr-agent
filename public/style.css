@@ -131,3 +131,13 @@ body {
   font-size: 0.85rem;
   border-top: 1px solid #eee;
 }
+
+.add-dog { max-width: 500px; margin: 0 auto 3rem; padding: 0 1rem; }
+.add-dog form { display: grid; gap: 0.7rem; }
+.add-dog input, .add-dog select, .add-dog textarea {
+  padding: 0.6rem; border: 1px solid #ddd; border-radius: 8px; font: inherit;
+}
+.add-dog button {
+  padding: 0.7rem; border: 0; border-radius: 8px; background: var(--accent);
+  color: white; font-weight: 600; cursor: pointer;
+}

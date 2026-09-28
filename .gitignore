@@ -1,0 +1,5 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl.terraform/
+git rm -r --cached terraform/.terraform

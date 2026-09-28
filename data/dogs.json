@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Akita Inu", "country": "Japon", "flag": "🇯🇵", "region": "asie", "emoji": "🐕", "description": "Chien noble et loyal, symbole de fidélité au Japon, rendu célèbre par l'histoire de Hachiko." },
+  { "id": 2, "name": "Berger Allemand", "country": "Allemagne", "flag": "🇩🇪", "region": "europe", "emoji": "🐕‍🦺", "description": "Race polyvalente, intelligente et travailleuse, très utilisée dans la police et l'armée." },
+  { "id": 3, "name": "Basenji", "country": "RD Congo", "flag": "🇨🇩", "region": "afrique", "emoji": "🐕", "description": "Petit chien de chasse africain qui n'aboie pas mais émet un son unique appelé yodel." },
+  { "id": 4, "name": "Chihuahua", "country": "Mexique", "flag": "🇲🇽", "region": "amerique-nord", "emoji": "🐶", "description": "Le plus petit chien du monde, originaire de l'état de Chihuahua, plein de caractère." },
+  { "id": 5, "name": "Dingo", "country": "Australie", "flag": "🇦🇺", "region": "oceanie", "emoji": "🐕", "description": "Chien sauvage emblématique de l'Australie, vivant en meute dans le bush." }
+]
