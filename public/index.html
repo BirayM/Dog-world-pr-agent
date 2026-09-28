@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chiens du Monde</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <h1>🐾 Chiens du Monde 🐾</h1>
+    <p>Une race de chien, une histoire, une région du monde</p>
+  </header>
+
+  <nav class="filters" id="filters" aria-label="Filtres par région"></nav>
+  <main class="grid" id="dog-grid"></main>
+
+  <section class="add-dog">
+    <h2>Ajouter un chien</h2>
+    <form id="dog-form">
+      <input id="f-name" name="name" placeholder="Nom de la race" required>
+      <input id="f-country" name="country" placeholder="Pays" required>
+      <select id="f-region" name="region" required></select>
+      <textarea id="f-description" name="description" placeholder="Description (10 caractères min.)" required></textarea>
+      <button type="submit">Ajouter</button>
+      <p id="form-message" role="status"></p>
+    </form>
+  </section>
+
+  <footer class="footer"><p>Projet de démo CI/CD — Cloud Run 🐾</p></footer>
+  <script src="script.js"></script>
+</body>
+</html>
