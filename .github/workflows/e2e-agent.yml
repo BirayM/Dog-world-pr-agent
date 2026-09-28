@@ -1,0 +1,68 @@
+name: e2e-agent
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: e2e-agent-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  e2e-agent:
+    if: github.event.label.name == 'e2e-agent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_URL: http://localhost:3100
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          token: ${{ secrets.TOKEN_GITHUB }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Start the app
+        run: |
+          PORT=3100 nohup node src/server.js > /tmp/server.log 2>&1 &
+          for i in $(seq 1 20); do curl -fs "$BASE_URL/healthz" && break; sleep 1; done
+
+      - name: Playwright agents (OpenCode + Groq)
+        uses: anomalyco/opencode/github@latest
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        with:
+          model: groq/openai/gpt-oss-120b
+          use_github_token: true
+          prompt: |
+            You are the E2E test agent for this repo. The app is already running at http://localhost:3100.
+            1. Run `git diff origin/${{ github.base_ref }}...HEAD` to see what this PR changes.
+            2. Use the Playwright planner agent to explore the app and write a test plan in specs/
+               covering the changed behavior and the main user flows.
+            3. Use the Playwright generator agent to turn the plan into tests in tests/e2e/.
+            4. Use the Playwright healer agent to run `npx playwright test` and fix failing tests.
+            Rules: never modify src/, public/ or data/. If the app itself is broken, mark the test
+            with test.fixme and explain it in a PR comment. End with a short summary comment on the PR.
+
+      - name: Push generated tests
+        run: |
+          git config user.name "e2e-agent"
+          git config user.email "e2e-agent@users.noreply.github.com"
+          git add -A tests
+          [ -d specs ] && git add -A specs || true
+          git diff --cached --quiet || git commit -m "test(e2e): tests générés par l'agent Playwright"
+          git push origin HEAD:${{ github.head_ref }}
