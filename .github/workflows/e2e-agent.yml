@@ -40,13 +40,13 @@ jobs:
           PORT=3100 nohup node src/server.js > /tmp/server.log 2>&1 &
           for i in $(seq 1 20); do curl -fs "$BASE_URL/healthz" && break; sleep 1; done
 
-      - name: Playwright agents (OpenCode + Groq)
+      - name: Playwright agents (OpenCode + Gemini)
         uses: anomalyco/opencode/github@latest
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          model: groq/openai/gpt-oss-120b
+          model: google/gemini-3-flash-preview
           use_github_token: true
           prompt: |
             You are the E2E test agent for this repo. The app is already running at http://localhost:3100.
