@@ -11,36 +11,43 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  PROJECT_ID: your-gcp-project-id
+  PROJECT_ID: be-ai-agent-705f
   REGION: europe-west1
-  REPOSITORY: dogs-world        # dépôt Artifact Registry
-  SERVICE: dogs-world           # service Cloud Run
+  REPOSITORY: dogs-world
+  SERVICE: dogs-world
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
       - run: npm ci
       - run: npm run lint
       - run: npm run test:coverage
 
   deploy:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' }}
     needs: test
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       id-token: write
+
     steps:
       - uses: actions/checkout@v4
 
       - id: auth
         uses: google-github-actions/auth@v3
         with:
+          project_id: ${{ env.PROJECT_ID }}
           token_format: access_token
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
@@ -51,19 +58,24 @@ jobs:
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
 
-      - name: Build and push image
+      - id: build
+        name: Build and push image
         run: |
           IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${SERVICE}:${GITHUB_SHA}"
           docker build -t "$IMAGE" .
           docker push "$IMAGE"
-          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
 
       - id: deploy
         uses: google-github-actions/deploy-cloudrun@v3
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          image: $IMAGE 
+          image: ${{ steps.build.outputs.image }}
 
       - name: Smoke test
-        run: curl --fail --silent --show-error --retry 5 --retry-delay 3 "${{ steps.deploy.outputs.url }}/healthz"
+        run: |
+          curl --fail --silent --show-error \
+            --retry 5 \
+            --retry-delay 3 \
+            "${{ steps.deploy.outputs.url }}/healthz"
