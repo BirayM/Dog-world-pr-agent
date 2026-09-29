@@ -40,6 +40,11 @@ jobs:
           PORT=3100 nohup node src/server.js > /tmp/server.log 2>&1 &
           for i in $(seq 1 20); do curl -fs "$BASE_URL/healthz" && break; sleep 1; done
 
+      - name: Configure Git
+        run: |
+          git config user.name "e2e-agent"
+          git config user.email "e2e-agent@users.noreply.github.com"    
+
       - name: Playwright agents (OpenCode + Gemini)
         uses: anomalyco/opencode/github@latest
         env:
