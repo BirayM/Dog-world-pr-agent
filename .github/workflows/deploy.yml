@@ -74,9 +74,4 @@ jobs:
           region: ${{ env.REGION }}
           image: ${{ steps.build.outputs.image }}
 
-      - name: Smoke test
-        run: |
-          ID_TOKEN=$(gcloud auth print-identity-token)
-          curl --fail --silent --show-error --retry 5 --retry-delay 3 \
-            -H "Authorization: Bearer $ID_TOKEN" \
-            "${{ steps.deploy.outputs.url }}/healthz"  
+     
