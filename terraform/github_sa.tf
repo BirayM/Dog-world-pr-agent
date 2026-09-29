@@ -56,3 +56,8 @@ resource "google_service_account_iam_member" "wif_impersonation" {
 
   member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.dog-github-pool.name}/attribute.repository/BirayM/Dog-world-pr-agent"
 }
+
+
+
+
+
