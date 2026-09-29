@@ -19,21 +19,21 @@ resource "google_iam_workload_identity_pool_provider" "dog-github-provider" {
     "attribute.repository" = "assertion.repository"
   }
 
-  # Restreint à votre org/repo
-  attribute_condition = "assertion.repository == 'Dog-word-pr-agent'"
+  attribute_condition = "assertion.repository == 'BirayM/Dog-world-pr-agent'"
+
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
 }
 
-# Service Account à impersonner
+# Service Account à impersoner
 resource "google_service_account" "dog_github_deploy" {
   project      = var.project_id
   account_id   = "github-deploy"
   display_name = "GitHub Actions Deploy"
 }
 
-# Rôles sur le projet (à adapter)
+# Rôles sur le projet
 resource "google_project_iam_member" "sa_roles" {
   for_each = toset([
     "roles/artifactregistry.writer",
@@ -43,6 +43,7 @@ resource "google_project_iam_member" "sa_roles" {
     "roles/iam.serviceAccountTokenCreator",
     "roles/serviceusage.serviceUsageAdmin"
   ])
+
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.dog_github_deploy.email}"
@@ -52,5 +53,11 @@ resource "google_project_iam_member" "sa_roles" {
 resource "google_service_account_iam_member" "wif_impersonation" {
   service_account_id = google_service_account.dog_github_deploy.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.dog-github-pool.name}/attribute.repository/Dog-word-pr-agent/Dog-word-pr-agent"
-}   
+
+  member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.dog-github-pool.name}/attribute.repository/BirayM/Dog-world-pr-agent"
+}
+
+
+
+
+
